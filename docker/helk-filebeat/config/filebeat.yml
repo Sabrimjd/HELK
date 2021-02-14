@@ -1,0 +1,31 @@
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+
+filebeat.modules:
+- module: netflow
+
+filebeat.inputs:
+- type: netflow
+  max_message_size: 10KiB
+  host: "0.0.0.0:9555"
+  protocols: [ v5, v9 ]
+  expiration_timeout: 30m
+  queue_size: 8192
+  #custom_definitions:
+  #  - /usr/share/filebeat/fields.yml
+  detect_sequence_reset: true
+
+filebeat.autodiscover:
+  providers:
+    - type: docker
+      hints.enabled: true
+
+
+processors:
+- add_cloud_metadata: ~
+
+output.elasticsearch:
+  hosts: '${ELASTICSEARCH_HOSTS:helk-elasticsearch:9200}'
+  username: '${ELASTICSEARCH_USERNAME:}'

@@ -1,0 +1,42 @@
+name: DDOS attempt spike same port
+index: filebeat-*
+
+type: spike
+threshold_cur: 5
+spike_height: 3
+spike_type: "up"
+timeframe:
+  seconds: 10
+
+query_key: 
+  -netflow.destination_transport_port
+realert:
+  minutes: 1
+
+
+slack:
+slack_webhook_url: "https://hooks.slack.com/services/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"
+dashboard_url: "https://45.154.171.92:4432/app/kibana#/dashboard/34e26884-161a-4448-9556-43b5bf2f62a2?_g=h@131f077&_a=h@5bf686b"
+
+alert:
+- slack
+
+alert_subject: "New spike on port {} | <{}|Show Dashboard>"
+alert_subject_args:
+  - netflow.destination_transport_port
+  - dashboard_url
+
+alert_text_type: exclude_fields
+alert_text: "DDOS detected on port : {} from : {} to : {} prefix : {} AS : {}"
+alert_text_args: 
+- netflow.destination_transport_port
+- netflow.source_ipv4_address
+- netflow.destination_ipv4_address
+- netflow.source_ipv4_prefix
+- netflow.bgp_source_as_number
+
+top_count_keys: 
+- netflow.source_ipv4_address
+- netflow.bgp_source_as_number
+- netflow.source_ipv4_prefix
+- netflow.destination_transport_port

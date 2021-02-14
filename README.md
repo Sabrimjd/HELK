@@ -26,6 +26,8 @@ The project is currently in an alpha stage, which means that the code and the fu
 * [Introduction](https://thehelk.com/intro.html)
 * [Installation](https://thehelk.com/installation.html)
 
+`docker --network="docker_helk" run docker.elastic.co/beats/filebeat:7.6.2 setup -E setup.kibana.host=helk-kibana:5601 -E output.elasticsearch.hosts=["helk-elasticsearch:9200"]`
+
 # Resources
 
 * [Welcome to HELK! : Enabling Advanced Analytics Capabilities](https://cyberwardog.blogspot.com/2018/04/welcome-to-helk-enabling-advanced_9.html)

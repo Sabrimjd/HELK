@@ -47,8 +47,9 @@ until [[ "$(curl -s -o /dev/null -w "%{http_code}" $ELASTICSEARCH_ACCESS)" == "2
 done
 
 # *********** Transform SIGMA Rules to Elastalert Signatures *************
-echo "$HELK_ELASTALERT_INFO_TAG Executing pull-sigma.sh script.."
-/etc/elastalert/pull-sigma.sh
+#echo "$HELK_ELASTALERT_INFO_TAG Executing pull-sigma.sh script.."
+#/etc/elastalert/pull-sigma.sh
+# Disabled for Linux
 
 # *********** Creating Elastalert Status Index ***************
 response_code=$(curl -s -o /dev/null -w "%{http_code}" $ELASTICSEARCH_ACCESS/elastalert_status)
